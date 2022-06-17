@@ -209,4 +209,8 @@ export class QuickMPC {
             throw err;
         }
     }
+
+    async getDataList(): Promise<[boolean, object[]]> {
+        return await this.client.getDataList();
+    }
 }

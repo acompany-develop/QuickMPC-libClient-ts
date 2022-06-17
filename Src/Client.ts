@@ -383,12 +383,12 @@ export class Client {
         return [isOk, message, jobUuid];
     }
 
-    async getDataList(): Promise<[boolean, string[]]> {
+    async getDataList(): Promise<[boolean, object[]]> {
         const req = new GetDataListRequest();
         req.setToken(this.token);
 
         let isOk: boolean = true;
-        let dataList: string[] = []
+        let dataList: object[] = []
 
         await this.clients[0].getDataList(req, {})
         .then((res) => {
@@ -396,7 +396,7 @@ export class Client {
                 isOk = false;
                 return [isOk, dataList];
             }
-            dataList = res.getResult();
+            dataList = JSON.parse(res.getResult());
         })
         .catch((err) => {
             if (err) {

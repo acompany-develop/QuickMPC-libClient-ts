@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import * as Share from './Share';
-import { validateDataId, validateJobUuid } from './Utils/ValidataUuid';
-import { SendSharesRequest, DeleteSharesRequest, GetSchemaRequest, ExecuteComputationRequest, GetComputationResultRequest, JoinOrder, Input, SendModelParamRequest, PredictRequest } from "./Proto/libc_to_manage_pb";
+import { validateDataId, validateJobId } from './Utils/ValidataId';
+import { SendSharesRequest, DeleteSharesRequest, GetDataListRequest, GetSchemaRequest, ExecuteComputationRequest, GetComputationResultRequest, JoinOrder, Input, SendModelParamRequest, PredictRequest } from "./Proto/libc_to_manage_pb";
 import { LibcToManageClient } from './Proto/Libc_to_manageServiceClientPb';
 import { ComputationMethod, PredictMethod, JobStatus } from './Proto/common_types/common_types_pb';
 import { handleGrpcError } from './Utils/HandleError';
@@ -381,5 +381,28 @@ export class Client {
         });
 
         return [isOk, message, jobUuid];
+    }
+
+    async getDataList(): Promise<[boolean, string[]]> {
+        const req = new GetDataListRequest();
+        req.setToken(this.token);
+
+        let isOk: boolean = true;
+        let dataList: string[] = []
+
+        await this.clients[0].getDataList(req, {})
+        .then((res) => {
+            if(!res.getIsOk()) {
+                isOk = false;
+                return [isOk, dataList];
+            }
+            dataList = res.getResult();
+        })
+        .catch((err) => {
+            if (err) {
+                handleGrpcError(err.code);
+            }
+        });
+        return [isOk, dataList];
     }
 }

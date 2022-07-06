@@ -391,7 +391,7 @@ export class Client {
             .getDataList(req, {})
             .catch((err) => {
                 handleGrpcError(err);
-                return new GetDataListResponse().setIsOk(false).setResult("");
+                return new GetDataListResponse().setIsOk(false).setResult("[]");
             });
         const isOk = dataListResponse.getIsOk();
         const dataList = JSON.parse(dataListResponse.getResult());

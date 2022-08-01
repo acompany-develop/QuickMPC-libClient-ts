@@ -1,0 +1,77 @@
+{
+  "name": "@acompany-develop/quickmpc-libclient-ts",
+  "version": "0.1.6",
+  "description": "QuickMPC client library for TypeScript and JavaScript.",
+  "main": "./Dist/Bundle.js",
+  "types": "./Dist/QuickMPC.d.ts",
+  "scripts": {
+    "tsc": "./node_modules/.bin/tsc",
+    "test": "jest",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/acompany-develop/QuickMPC-libClient-ts.git"
+  },
+  "homepage": "https://github.com/acompany-develop/QuickMPC-libClient-ts",
+  "bugs": {
+    "url": "https://github.com/acompany-develop/QuickMPC-libClient-ts/issues"
+  },
+  "keywords": [
+    "QuickMPC",
+    "Secure Computing",
+    "Multi Party Computation",
+    "JavaScript",
+    "TypeScript"
+  ],
+  "author": "Acompany",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.3.6",
+    "dayjs": "^1.11.3",
+    "google-protobuf": "^3.15.8",
+    "grpc-web": "^1.3.0",
+    "ts-node": "^10.1.0",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.14.5",
+    "@trust/webcrypto": "^0.9.2",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^26.0.24",
+    "@types/uuid": "^8.3.0",
+    "babel-loader": "^8.1.0",
+    "crypto-browserify": "^3.12.0",
+    "express": "^4.17.1",
+    "grpc_tools_node_protoc_ts": "^5.3.0",
+    "grpc-tools": "^1.11.2",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "ts-migrate": "^0.1.16",
+    "typescript": "^4.3.5",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "rootDir": "./",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "verbose": false,
+    "testMatch": [
+      "**/Tests/**/*test.+(ts)"
+    ],
+    "transform": {
+      "^.+\\.(ts)$": "ts-jest"
+    },
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
+  }
+}

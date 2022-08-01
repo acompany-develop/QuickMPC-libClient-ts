@@ -1,0 +1,65 @@
+version: "3.3"
+services:
+  envoy1:
+    container_name: envoy1
+    tty: true # 起動しっぱなし
+    image: envoyproxy/envoy:v1.17.1
+    volumes:
+      - type: bind
+        source: ./Config/envoy1.yaml
+        target: /etc/envoy/envoy.yaml
+    ports:
+      - "9001:9001"
+    networks:
+      shared-network:
+        ipv4_address: 10.0.1.11
+    command:
+      [
+        "/bin/sh",
+        "-c",
+        "/usr/local/bin/envoy -c /etc/envoy/envoy.yaml",
+      ]
+
+  envoy2:
+    container_name: envoy2
+    tty: true # 起動しっぱなし
+    image: envoyproxy/envoy:v1.17.1
+    volumes:
+      - type: bind
+        source: ./Config/envoy2.yaml
+        target: /etc/envoy/envoy.yaml
+    ports:
+      - "9002:9002"
+    networks:
+      shared-network:
+        ipv4_address: 10.0.2.11
+    command:
+      [
+        "/bin/sh",
+        "-c",
+        "/usr/local/bin/envoy -c /etc/envoy/envoy.yaml",
+      ]
+
+  envoy3:
+    container_name: envoy3
+    tty: true # 起動しっぱなし
+    image: envoyproxy/envoy:v1.17.1
+    volumes:
+      - type: bind
+        source: ./Config/envoy3.yaml
+        target: /etc/envoy/envoy.yaml
+    ports:
+      - "9003:9003"
+    networks:
+      shared-network:
+        ipv4_address: 10.0.3.11
+    command:
+      [
+        "/bin/sh",
+        "-c",
+        "/usr/local/bin/envoy -c /etc/envoy/envoy.yaml",
+      ]
+
+networks:
+  shared-network:
+    external: true

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QuickMPC DEMO</title>
+    <style>
+      .error {
+        color: #FF0000;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script src="./Dist/Bundle.js"></script>
+  </head>
+  <body>
+    <h1>QuickMPC DEMO</h1>
+    <h3>Send Share</h3>
+    <form onsubmit="sendShare(event)">
+      <div>
+          <input type="file" accept=".csv" onchange="readCsv(this)">
+      </div>
+      <br/>
+      <div>
+          <button id="button1" type="submit">Send</button>
+          <div id="output1"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Delete Share</h3>
+    <form onsubmit="deleteShare(event)">
+      <div>
+          <label for="data_id_list1">dataID List</label>
+          <input type="text" id="data_id_list1"> &nbsp;
+      </div>
+      <br/>
+      <div>
+          <button id="button2" type="submit">Delete</button>
+          <div id="output2"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Get Schema</h3>
+    <form onsubmit="getSchema(event)">
+      <div>
+        <label for="data_id">dataID</label>
+        <input type="text" id="data_id"> &nbsp;
+      </div>
+      <br/>
+      <div>
+          <button id="button3" type="submit">Get</button>
+          <div id="output3"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Execute Computation</h3>
+    <form onsubmit="executeComputation(event)">
+      <div>
+        <label for="method_id">methodID</label>
+        <input type="text" id="method_id">
+        <h4>Join Order</h4>
+        <label for="data_id_list2">dataID List</label>
+        <input type="text" id="data_id_list2"> &nbsp;
+        <label for="join">join</label>
+        <input type="text" id="join">
+        <label for="index">index</label>
+        <input type="text" id="index">
+        <h4>Input</h4>
+        <label for="src">src</label>
+        <input type="text" id="src"> &nbsp;
+        <label for="target">target</label>
+        <input type="text" id="target">
+      </div>
+      <br/>
+      <div>
+          <button id="button4" type="submit">Execute</button>
+          <div id="output4"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Get Computation Result</h3>
+    <form onsubmit="getComputationResult(event)">
+      <div>
+        <label for="job_uuid">jobUuid</label>
+        <input type="text" id="job_uuid">
+      </div>
+      <br/>
+      <div>
+        <button id="button5" type="submit">Get</button>
+        <div id="output5"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Send Model Prameters</h3>
+    <form onsubmit="sendModelParams(event)">
+      <div>
+          <input type="file" accept=".csv,.json" onchange="readCsv(this)">
+      </div>
+      <br/>
+      <div>
+          <button id="button_sendmp_csv" type="submit">csv Send</button>
+          <button id="button_sendmp_json" type="submit">json Send</button>
+          <div id="output_sendmp"></div>
+      </div>
+    </form>
+    <hr/>
+
+    <h3>Predict</h3>
+    <form onsubmit="predict(event)">
+      <div>
+        <label for="model_param_job_uuid_predict">modelParamJobUuid</label>
+        <input type="text" id="model_param_job_uuid_predict"> &nbsp;
+        <label for="model_id_predict">methodID</label>
+        <input type="text" id="model_id_predict">
+        <h4>Join Order</h4>
+        <label for="data_id_list_predict">dataID List</label>
+        <input type="text" id="data_id_list_predict"> &nbsp;
+        <label for="join_predict">join</label>
+        <input type="text" id="join_predict">
+        <label for="index_predict">index</label>
+        <input type="text" id="index_predict">
+        <h4>Input</h4>
+        <label for="src_predict">src</label>
+        <input type="text" id="src_predict">
+      </div>
+      <br/>
+      <div>
+          <button id="button_predict" type="submit">Predict</button>
+          <div id="output_predict"></div>
+      </div>
+    </form>
+    <hr/>
+
+  </body>
+</html>

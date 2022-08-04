@@ -224,57 +224,71 @@ export class Client {
         req.setJobUuid(jobUuid);
         req.setToken(this.token);
 
-        let isOk = true;
-        let message: string = "ok";
-        let statuses: JobStatus[] = [];
-        let results: string[][] | string[][][] = [];
-        let secrets: any = [];
-
         const promises = [];
-        for(let i = 0; i < this.clients.length; i++) {
-            promises.push(this.clients[i].getComputationResult(req, {}))
+        for (const client of this.clients) {
+            const call = client.getComputationResult(req, {});
+
+            // Receive data via stream
+            const resList: object[] = [];
+            call.on('data', function(response: any) {
+                resList.push({
+                  "isOk": response.getIsOk(),
+                  "pieceId": response.getPieceId(),
+                  "result": response.getResult(),
+                  "status": response.getStatus()
+                });
+            });
+
+            promises.push(new Promise((resolve, reject) => {
+                call.on('end', function() {
+                    // concatenate results in pieceId order
+                    resList.sort((a, b):number => a.pieceId - b.pieceId);
+                    let result = "";
+                    let isOk = true;
+                    for (const res of resList) {
+                        result += res.result;
+                        isOk &= res.isOk;
+                    }
+                    const status = resList[0].status;
+                    resolve({"isOk": isOk, "status": status, "result": result});
+                });
+                call.on('error', function(e) {
+                    reject(e)
+                });
+            }))
         }
 
+        let results: string[][] | string[][][] | object = [];
+        const statuses: JobStatus[] = [];
+        let isOk = true
         await Promise.all(promises)
-        .then((res) => {
-            for(let i = 0; i < res.length; i++) {
-                statuses.push(res[i].getStatus());
-            }
-
-            for(let i = 0; i < res.length; i++) {
-                if(!res[i].getIsOk()) {
-                    isOk = false;
-                    message = res[i].getMessage();
-                    return [isOk, message, statuses, secrets];
-                }
-            }
-
-            for(let i = 0; i < res.length; i++) {
-                results.push(JSON.parse(res[i].getResult()));
-            }
-        })
-        .catch((err) => {
-            if (err) {
-                handleGrpcError(err.code);
-                throw err;
+        .then((responses) => {
+            for (const res of responses) {
+                isOk &= res.isOk;
+                statuses.push(res.status)
+                results.push(JSON.parse(res.result))
             }
         });
+        if (!isOk) {
+            return [false, "ng", [], []];
+        }
 
-        // statusが全てCOMPLETEDでなければ復元せず返却する
+        // statuses must be all COMPLETED
         for(const s of statuses) {
             if(s != JobStatus.COMPLETED) {
-                isOk = false;
-                return [isOk, message, statuses, secrets];
+                return [false, "ng", statuses, []];
             }
         }
 
-        try {
-            secrets = Share.recons(results as any);
-        } catch(err) {
-            throw new Error("シェアの復元に失敗しました.");
-        }
+        const secrets = (() => {
+            try {
+                return Share.recons(results as any);
+            } catch(err) {
+                throw new Error("Failed to recons result share.");
+            }
+        })();
 
-        return [isOk, message, statuses, secrets];
+        return [isOk, "ok", statuses, secrets];
     }
 
     async sendModelParams(params: string[][] | object[]): Promise<[boolean, string, string]> {

@@ -246,7 +246,7 @@ export class Client {
                     let result = "";
                     let isOk = true;
                     for (const res of resList) {
-                        result += res.result;
+                        result += JSON.parse(res.result);
                         isOk &= res.isOk;
                     }
                     const status = resList[0].status;

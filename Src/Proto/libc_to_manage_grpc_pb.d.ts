@@ -58,7 +58,7 @@ interface ILibcToManageService_IExecuteComputation extends grpc.MethodDefinition
 interface ILibcToManageService_IGetComputationResult extends grpc.MethodDefinition<libc_to_manage_pb.GetComputationResultRequest, libc_to_manage_pb.GetComputationResultResponse> {
     path: "/libctomanage.LibcToManage/GetComputationResult";
     requestStream: false;
-    responseStream: false;
+    responseStream: true;
     requestSerialize: grpc.serialize<libc_to_manage_pb.GetComputationResultRequest>;
     requestDeserialize: grpc.deserialize<libc_to_manage_pb.GetComputationResultRequest>;
     responseSerialize: grpc.serialize<libc_to_manage_pb.GetComputationResultResponse>;
@@ -99,7 +99,7 @@ export interface ILibcToManageServer extends grpc.UntypedServiceImplementation {
     deleteShares: grpc.handleUnaryCall<libc_to_manage_pb.DeleteSharesRequest, libc_to_manage_pb.DeleteSharesResponse>;
     getSchema: grpc.handleUnaryCall<libc_to_manage_pb.GetSchemaRequest, libc_to_manage_pb.GetSchemaResponse>;
     executeComputation: grpc.handleUnaryCall<libc_to_manage_pb.ExecuteComputationRequest, libc_to_manage_pb.ExecuteComputationResponse>;
-    getComputationResult: grpc.handleUnaryCall<libc_to_manage_pb.GetComputationResultRequest, libc_to_manage_pb.GetComputationResultResponse>;
+    getComputationResult: grpc.handleServerStreamingCall<libc_to_manage_pb.GetComputationResultRequest, libc_to_manage_pb.GetComputationResultResponse>;
     sendModelParam: grpc.handleUnaryCall<libc_to_manage_pb.SendModelParamRequest, libc_to_manage_pb.SendModelParamResponse>;
     predict: grpc.handleUnaryCall<libc_to_manage_pb.PredictRequest, libc_to_manage_pb.PredictResponse>;
     getDataList: grpc.handleUnaryCall<libc_to_manage_pb.GetDataListRequest, libc_to_manage_pb.GetDataListResponse>;
@@ -118,9 +118,8 @@ export interface ILibcToManageClient {
     executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
     executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
     executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
-    getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
-    getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
-    getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
+    getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
+    getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
     sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;
     sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;
     sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;
@@ -146,9 +145,8 @@ export class LibcToManageClient extends grpc.Client implements ILibcToManageClie
     public executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
     public executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
     public executeComputation(request: libc_to_manage_pb.ExecuteComputationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.ExecuteComputationResponse) => void): grpc.ClientUnaryCall;
-    public getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
-    public getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
-    public getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.GetComputationResultResponse) => void): grpc.ClientUnaryCall;
+    public getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
+    public getComputationResult(request: libc_to_manage_pb.GetComputationResultRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
     public sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;
     public sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;
     public sendModelParam(request: libc_to_manage_pb.SendModelParamRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: libc_to_manage_pb.SendModelParamResponse) => void): grpc.ClientUnaryCall;

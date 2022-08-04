@@ -35,7 +35,7 @@ export class LibcToManageClient {
     this.options_ = options;
   }
 
-  methodDescriptorSendShares = new grpcWeb.MethodDescriptor(
+  methodInfoSendShares = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/SendShares',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.SendSharesRequest,
@@ -67,7 +67,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/SendShares',
         request,
         metadata || {},
-        this.methodDescriptorSendShares,
+        this.methodInfoSendShares,
         callback);
     }
     return this.client_.unaryCall(
@@ -75,10 +75,10 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/SendShares',
     request,
     metadata || {},
-    this.methodDescriptorSendShares);
+    this.methodInfoSendShares);
   }
 
-  methodDescriptorDeleteShares = new grpcWeb.MethodDescriptor(
+  methodInfoDeleteShares = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/DeleteShares',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.DeleteSharesRequest,
@@ -110,7 +110,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/DeleteShares',
         request,
         metadata || {},
-        this.methodDescriptorDeleteShares,
+        this.methodInfoDeleteShares,
         callback);
     }
     return this.client_.unaryCall(
@@ -118,10 +118,10 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/DeleteShares',
     request,
     metadata || {},
-    this.methodDescriptorDeleteShares);
+    this.methodInfoDeleteShares);
   }
 
-  methodDescriptorGetSchema = new grpcWeb.MethodDescriptor(
+  methodInfoGetSchema = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/GetSchema',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.GetSchemaRequest,
@@ -153,7 +153,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/GetSchema',
         request,
         metadata || {},
-        this.methodDescriptorGetSchema,
+        this.methodInfoGetSchema,
         callback);
     }
     return this.client_.unaryCall(
@@ -161,10 +161,10 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/GetSchema',
     request,
     metadata || {},
-    this.methodDescriptorGetSchema);
+    this.methodInfoGetSchema);
   }
 
-  methodDescriptorExecuteComputation = new grpcWeb.MethodDescriptor(
+  methodInfoExecuteComputation = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/ExecuteComputation',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.ExecuteComputationRequest,
@@ -196,7 +196,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/ExecuteComputation',
         request,
         metadata || {},
-        this.methodDescriptorExecuteComputation,
+        this.methodInfoExecuteComputation,
         callback);
     }
     return this.client_.unaryCall(
@@ -204,12 +204,12 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/ExecuteComputation',
     request,
     metadata || {},
-    this.methodDescriptorExecuteComputation);
+    this.methodInfoExecuteComputation);
   }
 
-  methodDescriptorGetComputationResult = new grpcWeb.MethodDescriptor(
+  methodInfoGetComputationResult = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/GetComputationResult',
-    grpcWeb.MethodType.UNARY,
+    grpcWeb.MethodType.SERVER_STREAMING,
     libc_to_manage_pb.GetComputationResultRequest,
     libc_to_manage_pb.GetComputationResultResponse,
     (request: libc_to_manage_pb.GetComputationResultRequest) => {
@@ -220,37 +220,16 @@ export class LibcToManageClient {
 
   getComputationResult(
     request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null): Promise<libc_to_manage_pb.GetComputationResultResponse>;
-
-  getComputationResult(
-    request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: libc_to_manage_pb.GetComputationResultResponse) => void): grpcWeb.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
-
-  getComputationResult(
-    request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: libc_to_manage_pb.GetComputationResultResponse) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/libctomanage.LibcToManage/GetComputationResult',
-        request,
-        metadata || {},
-        this.methodDescriptorGetComputationResult,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/libctomanage.LibcToManage/GetComputationResult',
-    request,
-    metadata || {},
-    this.methodDescriptorGetComputationResult);
+    metadata?: grpcWeb.Metadata) {
+    return this.client_.serverStreaming(
+      this.hostname_ +
+        '/libctomanage.LibcToManage/GetComputationResult',
+      request,
+      metadata || {},
+      this.methodInfoGetComputationResult);
   }
 
-  methodDescriptorSendModelParam = new grpcWeb.MethodDescriptor(
+  methodInfoSendModelParam = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/SendModelParam',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.SendModelParamRequest,
@@ -282,7 +261,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/SendModelParam',
         request,
         metadata || {},
-        this.methodDescriptorSendModelParam,
+        this.methodInfoSendModelParam,
         callback);
     }
     return this.client_.unaryCall(
@@ -290,10 +269,10 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/SendModelParam',
     request,
     metadata || {},
-    this.methodDescriptorSendModelParam);
+    this.methodInfoSendModelParam);
   }
 
-  methodDescriptorPredict = new grpcWeb.MethodDescriptor(
+  methodInfoPredict = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/Predict',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.PredictRequest,
@@ -325,7 +304,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/Predict',
         request,
         metadata || {},
-        this.methodDescriptorPredict,
+        this.methodInfoPredict,
         callback);
     }
     return this.client_.unaryCall(
@@ -333,10 +312,10 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/Predict',
     request,
     metadata || {},
-    this.methodDescriptorPredict);
+    this.methodInfoPredict);
   }
 
-  methodDescriptorGetDataList = new grpcWeb.MethodDescriptor(
+  methodInfoGetDataList = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/GetDataList',
     grpcWeb.MethodType.UNARY,
     libc_to_manage_pb.GetDataListRequest,
@@ -368,7 +347,7 @@ export class LibcToManageClient {
           '/libctomanage.LibcToManage/GetDataList',
         request,
         metadata || {},
-        this.methodDescriptorGetDataList,
+        this.methodInfoGetDataList,
         callback);
     }
     return this.client_.unaryCall(
@@ -376,7 +355,7 @@ export class LibcToManageClient {
       '/libctomanage.LibcToManage/GetDataList',
     request,
     metadata || {},
-    this.methodDescriptorGetDataList);
+    this.methodInfoGetDataList);
   }
 
 }

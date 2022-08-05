@@ -229,13 +229,13 @@ export class Client {
             const call = client.getComputationResult(req, {});
 
             // Receive data via stream
-            const resList: object[] = [];
+            const resList: {isOk: boolean, pieceId: number, result: string, status: JobStatus}[] = [];
             call.on('data', function(response: any) {
                 resList.push({
-                  "isOk": response.getIsOk(),
-                  "pieceId": response.getPieceId(),
-                  "result": response.getResult(),
-                  "status": response.getStatus()
+                  isOk: response.getIsOk(),
+                  pieceId: response.getPieceId(),
+                  result: response.getResult(),
+                  status: response.getStatus()
                 });
             });
 
@@ -247,7 +247,7 @@ export class Client {
                     let isOk = true;
                     for (const res of resList) {
                         result += JSON.parse(res.result);
-                        isOk &= res.isOk;
+                        isOk &&= res.isOk;
                     }
                     const status = resList[0].status;
                     resolve({"isOk": isOk, "status": status, "result": result});
@@ -258,13 +258,13 @@ export class Client {
             }))
         }
 
-        let results: string[][] | string[][][] | object = [];
+        let results: string[][] | string[][][] | any = [];
         const statuses: JobStatus[] = [];
         let isOk = true
         await Promise.all(promises)
-        .then((responses) => {
+        .then((responses: any) => {
             for (const res of responses) {
-                isOk &= res.isOk;
+                isOk &&= res.isOk;
                 statuses.push(res.status)
                 results.push(JSON.parse(res.result))
             }

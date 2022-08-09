@@ -37,13 +37,13 @@ function checkPieceSize(pieceSize: number) {
     const upperLimitSize: number = 1_000_000
     if (pieceSize < lowerLimitSize) {
         throw new Error(
-          "piece size " + pieceSize.toString() + " is over " +
+          "piece size " + pieceSize.toString() + " is under " +
           "specified limit size " + lowerLimitSize.toString()
         );
     }
     if (pieceSize > upperLimitSize) {
         throw new Error(
-          "piece size " + pieceSize.toString() + " is under " +
+          "piece size " + pieceSize.toString() + " is over " +
           "specified limit size " + upperLimitSize.toString()
         );
     }

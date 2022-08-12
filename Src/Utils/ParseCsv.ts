@@ -9,8 +9,16 @@ function toNumber(val: string): number {
     // Due to the limitation of comparison operation, k bits are taken out and divided by 2^m.
     const k = 32;
     const m = 16;
-    const hs = createHash('sha512').update(val).digest('hex')
-    const valInt = parseInt(hs.substring(0, (k>>2)), 16)
+    const bin = (() => {
+        let s = "";
+        for (const c of val) {
+            const cp = c.codePointAt(0);
+            if (!cp) { continue; }
+            s += cp.toString(2);
+        }
+        return s;
+    })();
+    const valInt = parseInt(bin.substring(0, k), 2)
     const valFloat = valInt / (1 << m)
     return valFloat
 }

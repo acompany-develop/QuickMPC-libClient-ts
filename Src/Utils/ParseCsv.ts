@@ -1,5 +1,4 @@
 import {sanitize} from './Sanitize'
-import {createHash} from 'crypto'
 
 // If val is a number, convert as is; if it is a string, unicode it
 function toNumber(val: string): number {

@@ -112,9 +112,26 @@ async function testPredict() {
     return;
 }
 
+async function testGetDataList() {
+    await qmpcClient.getDataList()
+    .then((res: [boolean, string]) => {
+        if(res[0] && res[1] == "datalist") {
+            console.log('getDataList test: \u001b[32m' + 'Passed');
+        } else {
+            console.log('getDataList test: \u001b[31m' + 'Failed');
+        }
+    })
+    .catch((err: Error) => {
+        console.log(err);
+    });
+    return;
+}
+
 testSendShares();
 testGetSchema();
 testExecuteComputation();
 testGetComputationResult();
 testSendModelParams();
 testPredict();
+testGetDataList();
+

@@ -164,3 +164,4 @@ message GetDataListResponse {
     string result = 1;
     bool is_ok = 2;
 }
+

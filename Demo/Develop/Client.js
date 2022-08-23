@@ -272,6 +272,31 @@ async function predict(event) {
     return;
 }
 
+async function getDataList(event) {
+    event.preventDefault();
+
+    $('#button_get_data_list').attr('disabled', true);
+    $('#output_get_data_list').append("<p>Getting DataList...</p>");
+
+    try {
+        const [isOk, results] = await qmpcClient.getDataList();
+        if(!isOk) {
+            alert("Get Data List failed: " + message);
+            $('#output_get_data_list').remove();
+            $('#button_get_data_list').attr('disabled', false);
+            return;
+        }
+        console.log("dataList: ", results);
+        alert("Get Data List is completed. The dataList is output to the console.");
+    } catch(err) {
+        alert("Get Data List error: " + err.message);
+    }
+
+    $('#output_get_data_list').remove();
+    $('#button_get_data_list').attr('disabled', false);
+    return;
+}
+
 window.sendShare = sendShare;
 window.deleteShare = deleteShare;
 window.getSchema = getSchema;
@@ -280,4 +305,5 @@ window.getComputationResult = getComputationResult;
 window.readCsv = readCsv;
 window.sendModelParams = sendModelParams;
 window.predict = predict;
+window.getDataList = getDataList;
 

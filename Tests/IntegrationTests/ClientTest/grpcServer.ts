@@ -1,6 +1,6 @@
 // grpc-webクライアントテストに使用するgrpcサーバの実装
 import * as grpc from '@grpc/grpc-js';
-import { SendSharesResponse, GetSchemaResponse, ExecuteComputationResponse, GetComputationResultResponse, SendModelParamResponse, PredictResponse } from '../../../Src/Proto/libc_to_manage_pb';
+import { SendSharesResponse, GetDataListResponse, GetSchemaResponse, ExecuteComputationResponse, GetComputationResultResponse, SendModelParamResponse, PredictResponse } from '../../../Src/Proto/libc_to_manage_pb';
 import { LibcToManageService } from '../../../Src/Proto/libc_to_manage_grpc_pb';
 import { JobStatus } from '../../../Src/Proto/common_types/common_types_pb';
 
@@ -58,6 +58,13 @@ function predict(call: any, callback: any) {
     callback(null, res);
 }
 
+function getDataList(call: any, callback: any) {
+    const res = new GetDataListResponse();
+    res.setIsOk(true);
+    res.setResult("datalist");
+    callback(null, res);
+}
+
 export async function serve(num: number) {
     const grpcServer = new grpc.Server();
 
@@ -67,7 +74,8 @@ export async function serve(num: number) {
         executeComputation,
         getComputationResult,
         sendModelParam,
-        predict
+        predict,
+        getDataList
     });
     await grpcServer.bindAsync(`localhost:700${num}`, grpc.ServerCredentials.createInsecure(), () => {
         grpcServer.start();

@@ -1,10 +1,19 @@
 import {sanitize} from './Sanitize'
 
-// 数値であればそのまま変換，文字列ならば36進数と解釈して10進数に変換
+// If val is a number, convert as is; if it is a string, unicode it
 function toNumber(val: string): number {
     const valNum = Number(val);
-    if(Number.isNaN(valNum)) { return parseInt(val, 36); }
-    return valNum;
+    if(!Number.isNaN(valNum)) { return valNum; }
+    // k,m are constants used in the comparison operation
+    // Due to the limitation of comparison operation, k bits are taken out and divided by 2^m.
+    const k = 32;
+    const m = 16;
+    const bin= Array.prototype.map.call(val, (c)=>{
+        return c.codePointAt(0).toString(2);
+    }).join("");
+    const valInt = parseInt(bin.substring(0, k), 2)
+    const valFloat = valInt / (1 << m)
+    return valFloat
 }
 
 

@@ -209,7 +209,7 @@ export class LibcToManageClient {
 
   methodInfoGetComputationResult = new grpcWeb.MethodDescriptor(
     '/libctomanage.LibcToManage/GetComputationResult',
-    grpcWeb.MethodType.UNARY,
+    grpcWeb.MethodType.SERVER_STREAMING,
     libc_to_manage_pb.GetComputationResultRequest,
     libc_to_manage_pb.GetComputationResultResponse,
     (request: libc_to_manage_pb.GetComputationResultRequest) => {
@@ -220,34 +220,13 @@ export class LibcToManageClient {
 
   getComputationResult(
     request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null): Promise<libc_to_manage_pb.GetComputationResultResponse>;
-
-  getComputationResult(
-    request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: libc_to_manage_pb.GetComputationResultResponse) => void): grpcWeb.ClientReadableStream<libc_to_manage_pb.GetComputationResultResponse>;
-
-  getComputationResult(
-    request: libc_to_manage_pb.GetComputationResultRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: libc_to_manage_pb.GetComputationResultResponse) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/libctomanage.LibcToManage/GetComputationResult',
-        request,
-        metadata || {},
-        this.methodInfoGetComputationResult,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/libctomanage.LibcToManage/GetComputationResult',
-    request,
-    metadata || {},
-    this.methodInfoGetComputationResult);
+    metadata?: grpcWeb.Metadata) {
+    return this.client_.serverStreaming(
+      this.hostname_ +
+        '/libctomanage.LibcToManage/GetComputationResult',
+      request,
+      metadata || {},
+      this.methodInfoGetComputationResult);
   }
 
   methodInfoSendModelParam = new grpcWeb.MethodDescriptor(

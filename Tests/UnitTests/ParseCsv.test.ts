@@ -1,4 +1,4 @@
-import { makePiece, parseCsv, parseCsvVector, parseJsonVector } from "../../Src/Utils/ParseCsv";
+import { makePiece, makePieceStr, parseCsv, parseCsvVector, parseJsonVector } from "../../Src/Utils/ParseCsv";
 
 const data: string = `id,attr1,attr2,attr3,attr4,attr5,attr6
 hoge,0,0.77,0.63,0.35,0.39,0.35
@@ -64,6 +64,35 @@ test('makePiece must make table pieces', () => {
     expect(JSON.stringify(pieces2) == JSON.stringify(piece_100)).toBe(true);
 })
 
+test('makePieceStr must make table pieces', () => {
+    const paramTuple: [number, string, string[]][] = [
+        // empty string
+        [1, "", []],
+        [3, "", []],
+        // normal piece
+        [6, "aaabbbcccddd", ["aaabbb", "cccddd"]],
+        [9, "aaabbbcccddd", ["aaabbbccc", "ddd"]],
+        [12, "aaabbbcccddd", ["aaabbbcccddd"]],
+        [15, "aaabbbcccddd", ["aaabbbcccddd"]],
+        // special character
+        [5, "!\"#$%&'()=~|-^@`[]{};+:*,<.>/?",
+          ["!\"#$%", "&'()=", "~|-^@", "`[]{}", ";+:*,", "<.>/?"]],
+    ];
+    for (const [pieceSize, str, expectedPiece] of paramTuple) {
+        const piece = makePieceStr(str, pieceSize);
+        expect(piece).toEqual(expectedPiece);
+    }
+})
+
+test('makePieceStr must throw when Beyond Constraints', () => {
+    const paramTuple: [number, string][] = [
+        [0, "string"],
+        [1_000_001, "string"],
+    ];
+    for (const [pieceSize, str] of paramTuple) {
+        expect(() => makePieceStr(str, pieceSize)).toThrow();
+    }
+})
 
 const model_data: string = `0,0.67,0.41,0.25,0.49,0.25`;
 const model_vector = [0, 0.67, 0.41, 0.25, 0.49,0.25];

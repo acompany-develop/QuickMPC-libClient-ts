@@ -27,13 +27,21 @@ function executeComputation(call: any, callback: any) {
     callback(null, res);
 }
 
-function getComputationResult(call: any, callback: any) {
-    const res = new GetComputationResultResponse();
-    res.setMessage("ok");
-    res.setIsOk(true);
-    res.setStatus(JobStatus.COMPLETED);
-    res.setResult("[[\"1\"],[\"2\"],[\"3\"]]");
-    callback(null, res);
+function getComputationResult(call: any) {
+    const res1 = new GetComputationResultResponse();
+    res1.setMessage("ok");
+    res1.setIsOk(true);
+    res1.setStatus(JobStatus.COMPLETED);
+    res1.setPieceId(1);
+    res1.setResult("\"[[\\\"1\\\"],[\\\"\"");
+    call.write(res1);
+    const res2 = new GetComputationResultResponse();
+    res2.setMessage("ok");
+    res2.setIsOk(true);
+    res2.setPieceId(2);
+    res2.setResult("\"2\\\"],[\\\"3\\\"]]\"");
+    call.write(res2);
+    call.end();
 }
 
 function sendModelParam(call: any, callback: any) {

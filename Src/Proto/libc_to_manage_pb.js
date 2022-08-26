@@ -2715,7 +2715,8 @@ proto.libctomanage.GetComputationResultResponse.toObject = function(includeInsta
     message: jspb.Message.getFieldWithDefault(msg, 1, ""),
     isOk: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
     result: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    status: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    pieceId: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -2767,6 +2768,10 @@ proto.libctomanage.GetComputationResultResponse.deserializeBinaryFromReader = fu
     case 4:
       var value = /** @type {!proto.pb_common_types.JobStatus} */ (reader.readEnum());
       msg.setStatus(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPieceId(value);
       break;
     default:
       reader.skipField();
@@ -2822,6 +2827,13 @@ proto.libctomanage.GetComputationResultResponse.serializeBinaryToWriter = functi
   if (f !== 0.0) {
     writer.writeEnum(
       4,
+      f
+    );
+  }
+  f = message.getPieceId();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
       f
     );
   }
@@ -2900,6 +2912,24 @@ proto.libctomanage.GetComputationResultResponse.prototype.setStatus = function(v
 };
 
 
+/**
+ * optional int32 piece_id = 5;
+ * @return {number}
+ */
+proto.libctomanage.GetComputationResultResponse.prototype.getPieceId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.libctomanage.GetComputationResultResponse} returns this
+ */
+proto.libctomanage.GetComputationResultResponse.prototype.setPieceId = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
 
 
 
@@ -2934,7 +2964,8 @@ proto.libctomanage.SendModelParamRequest.toObject = function(includeInstance, ms
   var f, obj = {
     jobUuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     params: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    token: jspb.Message.getFieldWithDefault(msg, 3, "")
+    pieceId: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    token: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -2980,6 +3011,10 @@ proto.libctomanage.SendModelParamRequest.deserializeBinaryFromReader = function(
       msg.setParams(value);
       break;
     case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPieceId(value);
+      break;
+    case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setToken(value);
       break;
@@ -3026,10 +3061,17 @@ proto.libctomanage.SendModelParamRequest.serializeBinaryToWriter = function(mess
       f
     );
   }
+  f = message.getPieceId();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
   f = message.getToken();
   if (f.length > 0) {
     writer.writeString(
-      3,
+      4,
       f
     );
   }
@@ -3073,11 +3115,29 @@ proto.libctomanage.SendModelParamRequest.prototype.setParams = function(value) {
 
 
 /**
- * optional string token = 3;
+ * optional int32 piece_id = 3;
+ * @return {number}
+ */
+proto.libctomanage.SendModelParamRequest.prototype.getPieceId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.libctomanage.SendModelParamRequest} returns this
+ */
+proto.libctomanage.SendModelParamRequest.prototype.setPieceId = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional string token = 4;
  * @return {string}
  */
 proto.libctomanage.SendModelParamRequest.prototype.getToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
@@ -3086,7 +3146,7 @@ proto.libctomanage.SendModelParamRequest.prototype.getToken = function() {
  * @return {!proto.libctomanage.SendModelParamRequest} returns this
  */
 proto.libctomanage.SendModelParamRequest.prototype.setToken = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

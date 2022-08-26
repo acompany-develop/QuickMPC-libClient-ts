@@ -232,7 +232,7 @@ var LibcToManageService = exports.LibcToManageService = {
   getComputationResult: {
     path: '/libctomanage.LibcToManage/GetComputationResult',
     requestStream: false,
-    responseStream: false,
+    responseStream: true,
     requestType: libc_to_manage_pb.GetComputationResultRequest,
     responseType: libc_to_manage_pb.GetComputationResultResponse,
     requestSerialize: serialize_libctomanage_GetComputationResultRequest,

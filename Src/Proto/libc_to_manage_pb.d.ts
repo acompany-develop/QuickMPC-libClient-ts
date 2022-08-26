@@ -314,6 +314,9 @@ export class GetComputationResultResponse extends jspb.Message {
   getStatus(): common_types_common_types_pb.JobStatus;
   setStatus(value: common_types_common_types_pb.JobStatus): GetComputationResultResponse;
 
+  getPieceId(): number;
+  setPieceId(value: number): GetComputationResultResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetComputationResultResponse.AsObject;
   static toObject(includeInstance: boolean, msg: GetComputationResultResponse): GetComputationResultResponse.AsObject;
@@ -328,6 +331,7 @@ export namespace GetComputationResultResponse {
     isOk: boolean,
     result: string,
     status: common_types_common_types_pb.JobStatus,
+    pieceId: number,
   }
 }
 
@@ -337,6 +341,9 @@ export class SendModelParamRequest extends jspb.Message {
 
   getParams(): string;
   setParams(value: string): SendModelParamRequest;
+
+  getPieceId(): number;
+  setPieceId(value: number): SendModelParamRequest;
 
   getToken(): string;
   setToken(value: string): SendModelParamRequest;
@@ -353,6 +360,7 @@ export namespace SendModelParamRequest {
   export type AsObject = {
     jobUuid: string,
     params: string,
+    pieceId: number,
     token: string,
   }
 }

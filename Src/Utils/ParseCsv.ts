@@ -1,7 +1,7 @@
 import {sanitize} from './Sanitize'
 import {createHash} from 'crypto'
 
-// If val is a number, convert as is; if it is a string, unicode it
+// If val is a number, convert as is; if it is a string, hash it
 function toNumber(val: string): number {
     const valNum = Number(val);
     if(!Number.isNaN(valNum)) { return valNum; }

@@ -8,7 +8,7 @@ function toNumber(val: string): number {
     // k,m are constants used in the comparison operation
     // Due to the limitation of comparison operation, k bits are taken out and divided by 2^m.
     const k = 48;
-    const m = 16;
+    const m = 32;
     const hs = createHash('sha512').update(val).digest('hex')
     const valInt = parseInt(hs.substring(0, (k>>2)), 16)
     const valFloat = valInt / (1 << m)

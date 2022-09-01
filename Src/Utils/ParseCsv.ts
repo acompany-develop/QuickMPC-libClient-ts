@@ -11,7 +11,7 @@ function toNumber(val: string): number {
     const m = 32;
     const hs = createHash('sha512').update(val).digest('hex')
     const valInt = parseInt(hs.substring(0, (k>>2)), 16)
-    const valFloat = valInt / (1 << m)
+    const valFloat = valInt / Math.pow(2, m);
     return valFloat
 }
 

@@ -1,18 +1,17 @@
 import {sanitize} from './Sanitize'
+import {createHash} from 'crypto'
 
-// If val is a number, convert as is; if it is a string, unicode it
+// If val is a number, convert as is; if it is a string, hash it
 function toNumber(val: string): number {
     const valNum = Number(val);
     if(!Number.isNaN(valNum)) { return valNum; }
     // k,m are constants used in the comparison operation
     // Due to the limitation of comparison operation, k bits are taken out and divided by 2^m.
-    const k = 32;
-    const m = 16;
-    const bin= Array.prototype.map.call(val, (c)=>{
-        return c.codePointAt(0).toString(2);
-    }).join("");
-    const valInt = parseInt(bin.substring(0, k), 2)
-    const valFloat = valInt / (1 << m)
+    const k = 48;
+    const m = 20;
+    const hs = createHash('sha512').update(val).digest('hex')
+    const valInt = parseInt(hs.substring(0, (k>>2)), 16)
+    const valFloat = valInt / Math.pow(2, m);
     return valFloat
 }
 
